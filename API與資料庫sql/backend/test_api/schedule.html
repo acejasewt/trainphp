@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+    <form id="searchform">
+        <div>
+            <label for="departure">出發站</label>
+            <select name="departure" class="departure">
+                <option value="台北" selected>台北</option>
+                <option value="新北">新北</option>
+                <option value="桃園">桃園</option>
+                <option value="彰化">彰化</option>
+                <option value="高雄">高雄</option>
+            </select>
+        </div>
+        <div>
+            <label for="destination">抵達站</label>
+            <select name="destination" class="destination">
+                <option value="台北">台北</option>
+                <option value="新北">新北</option>
+                <option value="桃園">桃園</option>
+                <option value="彰化">彰化</option>
+                <option value="高雄" selected>高雄</option>
+            </select>
+        </div>
+        <div>
+            <label for="start_time">抵達時間</label>
+            <select name="start_time" class="start_time">
+                <option value="10:20">10:20</option>
+                <option value="10:30">10:30</option>
+                <option value="10:50">10:50</option>
+                <option value="11:00">11:00</option>
+                <option value="12:00" selected>12:00</option>
+            </select>
+        </div>
+        <input type="submit" value="查詢">
+    </form>
+    <div id="display"></div>
+
+    <script>
+        var win = window.location.origin + window.location.pathname
+        if (win == window.location.href)
+        console.log("yes")
+        else{
+            var urlink = "http://localhost:8081//backend/schedule.php?"+window.location.href.split("?")[1]
+            fetch(urlink,{
+                method:'GET'
+            }).then(res => {
+                status = res.status
+                if (status == 200)
+                return res.text()
+                else if (status == 404)
+                alert("not found")
+                else
+                alert("invalid")
+                
+            }).then(text =>{
+                ar = JSON.parse(text)
+                for (let obj of ar) {
+                    obj = JSON.parse(obj)
+                    document.getElementById("display").innerHTML +=
+                    '<div>' +
+                        `<div>${obj.departure}</div>` +
+                        `<div>${obj.departure_time}</div>` +
+                        `<div>${obj.destination}</div>` +
+                        `<div>${obj.arrival_time}</div>` +
+                    '</div>'
+                }
+            }).catch(function (error){
+                console.error(error)
+            })
+        }
+    </script>
+</body>
+</html>

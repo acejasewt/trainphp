@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>訂票紀錄</title>
+    <link rel="stylesheet" href="static/css/style_overview.css">
+    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <a href="index.html"><img src="static/img/Group 1.png" alt="logo"></a>
+        </div>
+        <div class="header_bar">
+            <ul>
+                <li>
+                    <a href="index.html"><button class="header_btn header_btn_first header_btn_hover">首頁</button></a>
+                </li>
+                <li>
+                    <a href="booking.html">
+                        <button class="header_btn header_btn_hover">火車訂票</button>
+                    </a>
+                </li>
+                <li>
+                    <a href="intro.html"><button class="header_btn header_btn_hover">車站景點</button></a>
+                </li>
+                <li>
+                    <a href="knowledge.html"><button class="header_btn header_btn_hover">台鐵知識王</button></a>
+                </li>
+            </ul>
+            <div class="btn_acc">
+                <button class="header_btn btn_img">
+                    <img class="userimg" src="static/img/usrimg.jpg" alt="usrimg">
+                    <div class="dropdown">
+                        <ul>
+                            <li class="dropdown_link"><a href="overview.html">帳戶總覽</a></li>
+                            <li class="dropdown_link"><a href="logout.html">登出</a></li>
+                        </ul>
+                    </div>
+                </button>
+
+            </div>
+        </div>
+    </header>
+    <div class="contentbox">
+        <section class="funcbar">
+            <div class="funcusr">
+                <img src="static/img/usrimg.jpg" alt="usr">
+            </div>
+            <a href="overview.html">
+                <div class="barlist">
+                    <div class="i">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <div class="barword">帳戶總覽</div>
+                </div>
+            </a>
+            <a href="bookinghis.html">
+                <div class="barlist barfocus">
+                    <div class="i">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <div class="barword">訂票紀錄</div>
+                </div>
+            </a>
+            <a href="change.html">
+                <div class="barlist">
+                    <div class="i">
+                        <i class="fas fa-pen"></i>
+                    </div>
+                    <div class="barword">修改個人資料</div>
+                </div>
+            </a>
+        </section>
+        <section class="content">
+            <div class="contenttitle">訂票紀錄</div>
+            <div id="tickethisbox"></div>
+        </section>
+    </div>
+    <script src="API_js/bookhis.js"></script>
+</body>
+
+</html>

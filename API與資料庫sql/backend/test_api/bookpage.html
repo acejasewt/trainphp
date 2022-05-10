@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body onload="fetchdata()">
+    <div id="display"></div>
+    <form id="ticketform">
+        <div class="subformbox">
+            <h3>一般票</h3>
+            <div class="flexbox">
+                <div class="btnl btn">-</div>
+                <input type="number" min="0" max="6"  value="0" name="adult" required>
+                <div class="btnr btn">+</div>
+            </div>
+        </div>
+        <div class="subformbox ticketbox">
+            <h3>敬老票</h3>
+            <div class="flexbox">
+                <div class="btnl btn">-</div>
+                <input type="number" min="0" max="6"  value="0" name="elder" required>
+                <div class="btnr btn">+</div>
+            </div>
+        </div>
+        <div class="subformbox ticketbox">
+            <h3>孩童票</h3>
+            <div class="flexbox">
+                <div class="btnl btn">-</div>
+                <input type="number" min="0" max="6" value="0" name="child" required>
+                <div class="btnr btn">+</div>
+            </div>
+        </div>
+        <input type="submit" value="訂票">
+    </form>
+    <script>
+        function fetchdata(){
+            var urlink = "http://localhost:8081//backend/schedule.php?" + window.location.href.split("?")[1]
+            fetch(urlink,{
+                method:'GET'
+            }).then(res => {
+                status = res.status
+                if (status == 200)
+                return res.text()
+                else if (status == 404)
+                alert("not found")
+                else{
+                alert("Not login Yet")
+                location.replace('index.php')
+                }
+            }).then(text =>{
+                ar = JSON.parse(text)
+
+                document.getElementById("display").innerHTML +=
+                    '<div>' +
+                        `<div>${ar['departure']}</div>` +
+                        `<div>${ar['departure_time']}</div>` +
+                        `<div>${ar['destination']}</div>` +
+                        `<div>${ar['arrival_time']}</div>` +
+                    '</div>'
+            }).catch(function (error){
+                console.error(error)
+            })
+        }
+    </script>
+    <script src="bookpage.js"></script>
+</body>
+</html>

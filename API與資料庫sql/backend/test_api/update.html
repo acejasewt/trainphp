@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body onload="getinfor()">
+    <form id="updateform">
+        <div>
+            <h5>用戶實際姓名</h5>
+            <input class="input" type="text" name="real_name" id="real_name">
+        </div>
+        <div>
+            <h5>用戶者名稱</h5>
+            <input class="input" type="text" name="username">
+        </div>
+        <div>
+            <h5>密碼</h5>
+            <input class="input" type="password" name="password">
+        </div>
+        <div>
+            <h5>請再輸入密碼</h5>
+            <input class="input" type="password" name="checkpw" id="checkpw">
+        </div>
+        <div>
+            <h5>信箱</h5>
+            <input class="input" type="email" name="mail">
+        </div>
+        <div>
+            <h5>電話</h5>
+            <input class="input" type="text" name="phone">
+        </div>
+        <input type="submit" value="修改個人資訊">
+    </form>
+    <script>
+        function getinfor(){
+            fetch('http://localhost:8081/backend/userinfo.php',{
+                method:'GET',
+            }).then(res => {
+                status = res.status
+                console.log(status)
+                if (status == 403){
+                    alert("Not Login Yet!")
+                    location.replace('index.php')
+                }
+                return res.text()
+            }).then(text =>{
+                var ar = JSON.parse(text)
+                $('.input').each(function(){
+                    $(this).attr("placeholder",ar[$(this).attr('name')])
+                })
+            }).catch(function (error){
+                console.error(error)
+            })
+        }
+
+        const updateform = document.getElementById('updateform')
+        updateform.addEventListener('submit',(e) => {
+            e.preventDefault()
+            const checkpw = $('input[name="checkpw"]').val()
+            const password = $('input[name="password"]').val()
+            const updateparams = new URLSearchParams()
+
+            if ((checkpw == password)){
+                
+                $('.input').each(function(){
+                        var temp
+                        ($(this).val()!= '')?(temp = $(this).val()):(temp = $(this).attr("placeholder"))
+                        updateparams.append($(this).attr('name'),temp)
+                })
+                
+                fetch('http://localhost:8081//backend/userinfo.php',{
+                    method:'PATCH',
+                    body: updateparams,
+                    credentials: 'include'
+                }).then(res => {
+                    status = res.status
+                    console.log(status)
+
+                    if (status == 200)
+                    alert("Update Successful")
+                    else if (status == 403)
+                    alert("Not Login")
+                    else
+                    alert("invalid")
+                    return res.text()
+                }).then(text =>{
+                    console.log(text)
+                }).catch(function (error){
+                    console.error(error)
+                })
+
+            }else
+            console.log("no")
+        })
+    </script>
+</body>
+</html>

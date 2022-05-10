@@ -1,0 +1,39 @@
+1. 先從--/API與資料庫sql/--取得railway.sql匯入MySQL(可參考報告書資料庫結構圖)
+2. 將--/backend/--與內部檔案移至以下相對路徑 (可參考報告書的檔案結構圖)
+
+   ---/backend/---
+	---attraction.php
+	---db.php
+	---journey.php
+	---schedule.php
+	---session.php
+	---userinfo
+
+   ---/teamwork_tenth_php/---
+   	---/templates/---
+		---/API_js/---
+		---/static/---
+			---/css/---
+			---/img/---
+			---/js/---
+
+***若MySQL有增設密碼必須在--/backend/--內的db.php修改成以下格式***
+	$conn = new mysqli('localhost', '使用者名稱', '使用者密碼', '資料表');
+
+
+***如果遇到Cors Policy問題可以下載以下google外掛套件***
+
+	https://chrome.google.com/webstore/detail/moesif-origin-cors-change/digfbfaphojjndkpccljibejjbppifbc/related?utm_source=chrome-ntp-icon
+
+
+***如果更改xampp埠號以下API_js內檔案fetch網址也必須更改***
+
+	bookhis.js          line 2
+	booking.js          line 3
+	bookingres.js       line 3, line 6
+	getheader.js        line 2
+	login.js            line 14, line 34
+	overview.js         line 2, line 31
+	realbooking.js      line 2, line 45
+	register.js         line 14
+	update.js           line 2, line 36

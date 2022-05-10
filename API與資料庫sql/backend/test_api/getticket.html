@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get ticket</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body onload="getticket()">
+    <div id="list"></div>
+    <script>
+        var ar
+        function getticket(){
+            fetch('http://localhost:8081//backend/journey.php',{
+                method:'GET'
+            }).then(res => {
+                status = res.status
+                console.log(status)
+                if (status == 403){
+                    alert("還未登入")
+                    location.replace( "./index.php")
+                }
+                else if ((status == 404) || status == 500){
+                    alert("沒有任何訂票紀錄")
+                    location.replace( "./index.php")
+                }
+                else
+                return res.text()
+            }).then(text =>{
+                console.log(text)
+                ar = JSON.parse(text)
+                console.log(ar)
+                for (let obj of ar) {
+                    obj = JSON.parse(obj)
+                    document.getElementById("list").innerHTML +=
+                    '<div>' +
+                        `<div>${obj.departure}</div>` +
+                        `<div>${obj.departure_time}</div>` +
+                        `<div>${obj.destination}</div>` +
+                    '</div>'
+                }
+            }).catch(function (error){
+                console.error(error)
+            })
+        }
+    </script>
+</body>
+</html>
